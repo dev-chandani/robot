@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Campus Robo Navigation</title>
+
+<style>
+
+body{
+  font-family: Arial, sans-serif;
+  background:#f2f6fa;
+  text-align:center;
+  margin:0;
+  overflow:hidden;
+}
+
+h2{ color:#003366; }
+
+/* Campus */
+.campus{
+  width:95%;
+  max-width:100%;
+  aspect-ratio: 3/2;
+  margin:20px auto;
+  border:3px solid #003366;
+  position:relative;
+  background:#e8f0ff;
+  overflow:hidden;
+}
+
+/* Image */
+.campus img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* Blocks */
+.block{
+  position:absolute;
+  padding:4px;
+  background:lawngreen;
+  border:2px solid #003366;
+  border-radius:6px;
+  font-size:10px;
+}
+
+/* Convert to % */
+.Block-A{top:19%; left:57.4%;}
+.cse{ top:18%; left:72.6%; }
+.Block-B{ top:20%; left:26.5%; }
+.Block-C{ top:25%; left:41.5%; }
+.admission{ top:19%; left:21.5%; }
+.Pro {top:28%; left:66%;}
+.Cantine{top:4%; left:77.5%;}
+.account{top:28.5%; left:73%;}
+.exam{top:29%; left:79%;}
+.Conference{top:6%; left:21%;}
+.Registrar{top:28%; left:16%;}
+.AG{top:45%; left:75%;}
+.NCC{top:43%; left:15%;}
+.parking{top:43%; left:55%;}
+.play{top:0%; left:0%;}
+
+/* Robo */
+.robo{
+  position:absolute;
+  width:3%;
+  aspect-ratio:1;
+  background:red;
+  border-radius:8px;
+  top:55%;
+  left:42.5%;
+  transition: all 1s ease;
+}
+
+.eye{
+  width:20%;
+  height:20%;
+  background:white;
+  border-radius:50%;
+  position:absolute;
+  top:20%;
+}
+.eye.left{ left:20%; }
+.eye.right{ right:20%; }
+
+/* Buttons */
+button{
+  margin:5px;
+  padding:8px 10px;
+  background:#003366;
+  color:white;
+  border:none;
+  cursor:pointer;
+}
+
+#rotateMsg{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:black;
+  color:white;
+  font-size:20px;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+
+
+
+#mapSVG{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:1;
+}
+
+.robo{
+  z-index:2;
+}
+
+@media screen and (orientation:portrait){
+  #rotateMsg{
+    display:flex;
+  }
+  .campus{
+    display:none;
+  }
+}
+
+
+/* Mobile */
+@media(max-width:600px){
+  .block{ font-size:8px; padding:2px; }
+  button{ font-size:12px; }
+}
+
+</style>
+</head>
+
+<body>
+  <div id="rotateMsg">📱 Please rotate your phone</div>
+
+<h2> C.V.R.U Campus Robo</h2>
+
+<!-- Buttons -->
+<button onclick="goTo('Block-A')">BLOCK - A</button>
+<button onclick="goTo('Block-B')">BLOCK - B</button>
+<button onclick="goTo('Block-C')">BLOCK - C</button>
+<button onclick="goTo('cse')">C.S.E Dept</button>
+<button onclick="goTo('Registrar')">Registrar Chamber</button>
+<button onclick="goTo('admission')">Admission Cell</button>
+<button onclick="goTo('Pro ')">Pro VC chamber</button>
+<button onclick="goTo('account')">Account sec</button>
+<button onclick="goTo('Cantine')">CANTINE</button>
+<button onclick="goTo('Conference Hall')">Conference Hall</button>
+<button onclick="goTo('NCC')">NCC ground</button>
+<button onclick="goTo('AG')">AG ground</button>
+<button onclick="goTo('parking')">Parking</button>
+<button onclick="goTo('exam')">exam dept</button>
+<button onclick="goTo('play')">playground</button>
+
+<!-- Campus -->
+<div class="campus">
+     <div class="image"><img src="./WhatsApp Image 2026-04-13 at 12.49.52 PM.jpeg" alt=""></div>
+
+  <!-- Robo -->
+  <div id="robo" class="robo">
+    <div class="eye left"></div>
+    <div class="eye right"></div>
+   
+  </div>
+
+  <!-- Departments -->
+  <div class="block cse">C.S.E Dept</div>
+  <div class="block Cantine">CANTINE</div>
+  <!-- <div class="block admission">Admission Cell</div> -->
+   <div class="block Pro">Pro VC chamber</div>
+  <div class="block AG">AG GROUND</div>
+  <div class="block account">Account sec</div>
+   <div class="block Block-A">BLOCK - A</div>
+   <div class="block Block-B">BLOCK - B</div>
+   <div class="block Block-C">BLOCK - C</div>
+  <div class="block NCC">NCC GROUND</div>
+  <div class="block admission">Admission <br>Cell</div>
+   <div class="block Conference">CONFERENCE - HALL</div>
+  <div class="block parking">PARKING</div>
+  <div class="block Registrar">Registrar Chamber</div>
+  <div class="block exam">exam dept</div>
+  <div class="block play">play ground</div>
+
+</div>
+
+<p id="info">Click a button to move Robo 🤖</p>
+
+
+<script>
+
+    function goTo(place){
+  const robo = document.getElementById("robo");
+  const info = document.getElementById("info");
+
+  const positions = {
+    "cse": ["18%","72.6%"],
+    "Cantine": ["4%","77.5%"],
+    "admission": ["19%","21.5%"],
+    "Pro ": ["28%","66%"],
+    "Block-B": ["20%","26.5%"],
+    "Block-C": ["25%","41.5%"],
+    "account": ["28.5%","73%"],
+    "exam": ["29%","79%"],
+    "Conference Hall": ["6%","21%"],
+    "Block-A": ["19%","57.4%"],
+    "AG": ["45%","75%"],
+    "Registrar": ["28%","16%"],
+    "NCC": ["43%","15%"],
+    "parking": ["43%","55%"],
+    "play": ["0%","0%"]
+  };
+
+  if(positions[place]){
+    robo.style.top = positions[place][0];
+    robo.style.left = positions[place][1];
+    info.innerText = "🤖 Robo reached " + place;
+  }
+}
+
+
+</script>
+
+</body>
+</html>
